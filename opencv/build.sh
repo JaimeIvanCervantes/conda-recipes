@@ -6,6 +6,8 @@ else
     PY_LIB="libpython2.7.so"
 fi
 
+export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+
 mkdir build
 cd build
 cmake                                                               \
@@ -13,10 +15,12 @@ cmake                                                               \
     -DPYTHON_INCLUDE_DIR=$PREFIX/include/python2.7/                 \
     -DPYTHON_LIBRARY=$PREFIX/lib/$PY_LIB                            \
     -DPYTHON_PACKAGES_PATH=$PREFIX/lib/python2.7/site-packages/     \
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath,${PREFIX}/lib"             \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-rpath,${PREFIX}/lib"          \
     -DCMAKE_INSTALL_PREFIX=$PREFIX                                  \
     -DWITH_CUDA=OFF                                                 \
     -DWITH_AVFOUNDATION=OFF                                         \
-    -DWITH_FFMPEG=OFF                                               \
+    -DWITH_FFMPEG=ON                                                \
     -DJPEG_INCLUDE_DIR:PATH=$PREFIX/include                         \
     -DJPEG_LIBRARY:FILEPATH=$PREFIX/lib/libjpeg.so                  \
     -DPNG_PNG_INCLUDE_DIR:PATH=$PREFIX/include                      \
@@ -24,5 +28,6 @@ cmake                                                               \
     -DZLIB_INCLUDE_DIR:PATH=$PREFIX/include                         \
     -DZLIB_LIBRARY:FILEPATH=$PREFIX/lib/libz.so                     \
     ..
+
 make
 make install

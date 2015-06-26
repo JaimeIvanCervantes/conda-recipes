@@ -1,7 +1,7 @@
 # Tested on Mac OS X 10.9 using clang compiler provided by XCode
 package:
     name: opencv
-    version: 2.4.9
+    version: 2.4.9.99
 
 source:
     fn: opencv-2.4.9.zip
@@ -18,12 +18,14 @@ requirements:
         - zlib
         - libpng
         - python
+        - ffmpeg
     run:
         - python
         - numpy
         - jpeg
         - zlib
         - libpng
+        - ffmpeg
 test:
     imports:
       - cv2
